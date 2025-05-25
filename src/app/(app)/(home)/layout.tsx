@@ -5,7 +5,7 @@ import { Footer } from "./footer";
 import { Navbar } from "./navbar";
 import { SearchFilters } from "./search-filters";
 import { Category } from "@/payload-types";
-import { UndoIcon } from "lucide-react";
+import { CustomeCategory } from "./types";
 
 interface Props {
   children: React.ReactNode;
@@ -24,9 +24,10 @@ const Layout = async ({ children }: Props) => {
         exists: false,
       },
     },
+    sort: "name"
   });
 
-  const formattedData = data.docs.map((doc) => ({
+  const formattedData: CustomeCategory[] = data.docs.map((doc) => ({
     ...doc,
     subcategories: (doc.subcategories?.docs ?? []).map((doc) => ({
         ...(doc as Category),
