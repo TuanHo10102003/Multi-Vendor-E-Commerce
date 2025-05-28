@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Poppins } from "next/font/google";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
 import {
@@ -32,15 +32,20 @@ const poppins = Poppins({
 export const SignInView = () => {
   const router = useRouter();
 
-  const trpc = useTRPC()
-  const login = useMutation(trpc.auth.login.mutationOptions({
-    onError: (error) => {
-      toast.error(error.message)
-    },
-    onSuccess: () => {
-      router.push("/")
-    }
-  }))
+  const trpc = useTRPC();
+  const queryClient = useQueryClient();
+
+  const login = useMutation(
+    trpc.auth.login.mutationOptions({
+      onError: (error) => {
+        toast.error(error.message);
+      },
+      onSuccess: async () => {
+        await queryClient.invalidateQueries(trpc.auth.session.queryFilter());
+        router.push("/");
+      },
+    })
+  );
 
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
@@ -51,7 +56,7 @@ export const SignInView = () => {
   });
 
   const onSubmit = (values: z.infer<typeof loginSchema>) => {
-    login.mutate(values)
+    login.mutate(values);
   };
 
   return (
@@ -81,10 +86,8 @@ export const SignInView = () => {
                 </Link>
               </Button>
             </div>
-            <h1 className="text-4xl font-medium">
-              Welcome back to Tuanho.
-            </h1>
-            
+            <h1 className="text-4xl font-medium">Welcome back to Tuanho.</h1>
+
             <FormField
               name="email"
               render={({ field }) => (

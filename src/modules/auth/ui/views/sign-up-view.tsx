@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Poppins } from "next/font/google";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
 import {
@@ -33,15 +33,20 @@ const poppins = Poppins({
 export const SignUpView = () => {
   const router = useRouter();
 
-  const trpc = useTRPC()
-  const register = useMutation(trpc.auth.register.mutationOptions({
-    onError: (error) => {
-      toast.error(error.message)
-    },
-    onSuccess: () => {
-      router.push("/")
-    }
-  }))
+  const trpc = useTRPC();
+  const queryClient = useQueryClient();
+
+  const register = useMutation(
+    trpc.auth.register.mutationOptions({
+      onError: (error) => {
+        toast.error(error.message);
+      },
+      onSuccess: async () => {
+        await queryClient.invalidateQueries(trpc.auth.session.queryFilter());
+        router.push("/");
+      },
+    })
+  );
 
   const form = useForm<z.infer<typeof registerShema>>({
     resolver: zodResolver(registerShema),
@@ -53,7 +58,7 @@ export const SignUpView = () => {
   });
 
   const onSubmit = (values: z.infer<typeof registerShema>) => {
-    register.mutate(values)
+    register.mutate(values);
   };
 
   const username = form.watch("username");
