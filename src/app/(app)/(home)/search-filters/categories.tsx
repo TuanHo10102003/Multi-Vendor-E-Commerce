@@ -7,12 +7,15 @@ import { cn } from "@/lib/utils";
 import { ListFilterIcon } from "lucide-react";
 import { CategoriesSidebar } from "./categories-sidebar";
 import { CategoriesGetManyOutput } from "@/modules/categories/types";
+import { useParams } from "next/navigation";
 
 interface CategoriesProps {
   data: CategoriesGetManyOutput;
 }
 
 export const Categories = ({ data }: CategoriesProps) => {
+  const params = useParams();
+
   const containerRef = useRef<HTMLDivElement>(null);
   const measureRef = useRef<HTMLDivElement>(null);
   const viewAllRef = useRef<HTMLDivElement>(null);
@@ -21,7 +24,8 @@ export const Categories = ({ data }: CategoriesProps) => {
   const [isAnyHovered, SetIsAnyHovered] = useState(false);
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
 
-  const activeCategory = "all";
+  const categoryParam = params.category as string | undefined;
+  const activeCategory = categoryParam || "all";
 
   const activeCategoryIndex = data.findIndex(
     (cat) => cat.slug === activeCategory
@@ -63,8 +67,8 @@ export const Categories = ({ data }: CategoriesProps) => {
       {/* Category Sidebar */}
       <CategoriesSidebar open={isSideBarOpen} onOpenChange={setIsSideBarOpen} />
 
-{/* Hidden div to measure all items */}
-      <div 
+      {/* Hidden div to measure all items */}
+      <div
         ref={measureRef}
         className="absolute opacity-0 pointer-events-none flex"
         style={{ position: "fixed", top: -9999, left: -9999 }}
@@ -79,8 +83,8 @@ export const Categories = ({ data }: CategoriesProps) => {
           </div>
         ))}
       </div>
-{/* Visible items */}
-      <div 
+      {/* Visible items */}
+      <div
         ref={containerRef}
         className="flex flex-nowrap items-center ml-10"
         onMouseEnter={() => SetIsAnyHovered(true)}
@@ -97,13 +101,17 @@ export const Categories = ({ data }: CategoriesProps) => {
         ))}
 
         <div ref={viewAllRef} className="shrink-0">
-          <Button 
-            className={cn("h-11 px-4 bg-transparent border-transparent rounded-full hover:bg-white hover:border-primary text-black",
-            isActiveCategoryHidden && isAnyHovered && "bg-white border-primary")}
+          <Button
+            className={cn(
+              "h-11 px-4 bg-transparent border-transparent rounded-full hover:bg-white hover:border-primary text-black",
+              (isActiveCategoryHidden || activeCategory === "all") &&
+                "bg-white border-primary"
+            )}
+            variant="elevated"
             onClick={() => setIsSideBarOpen(true)}
           >
             View All
-            <ListFilterIcon className="ml-2"/>
+            <ListFilterIcon className="ml-2" />
           </Button>
         </div>
       </div>

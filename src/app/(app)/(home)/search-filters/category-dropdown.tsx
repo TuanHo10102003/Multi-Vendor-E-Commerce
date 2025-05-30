@@ -31,14 +31,13 @@ export const CategoryDropdown = ({
 
   const onMouseLeave = () => setIsOpen(false);
 
-  const dropdonwPosition = getDropdownPosition()
+  const dropdonwPosition = getDropdownPosition();
 
   // const toggleDropDown = () => {
   //   if(category.subcategories?.docs?.length){
   //     setIsOpen(!isOpen)
   //   }
   // }
-
 
   return (
     <div
@@ -53,16 +52,17 @@ export const CategoryDropdown = ({
           variant="elevated"
           className={cn(
             "h-11 px-4 bg-transparent border-transparent rounded-full hover:bg-white hover:border-primary text-black",
-            isActive && isNavigationHovered && "bg-white border-primary",
-            isOpen && "bg-white border-primary shadow-[4px_4px_0px_rgba(0,0,0,1)] -translate-x-[4px] -translate-y-[4px]"
+            isActive && "bg-white border-primary",
+            isOpen &&
+              "bg-white border-primary shadow-[4px_4px_0px_rgba(0,0,0,1)] -translate-x-[4px] -translate-y-[4px]"
           )}
+          asChild
         >
-          <Link 
-            href={`/${category.slug === "all" ? "" : category.slug}`}
-          >
+          <Link href={`/${category.slug === "all" ? "" : category.slug}`}>
             {category.name}
           </Link>
         </Button>
+
         {category.subcategories && category.subcategories.length > 0 && (
           <div
             className={cn(
@@ -72,7 +72,7 @@ export const CategoryDropdown = ({
           ></div>
         )}
       </div>
-      <SubcategoryMenu 
+      <SubcategoryMenu
         category={category}
         isOpen={isOpen}
         position={dropdonwPosition}
