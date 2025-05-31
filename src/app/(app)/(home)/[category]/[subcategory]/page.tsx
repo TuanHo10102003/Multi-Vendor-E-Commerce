@@ -1,6 +1,6 @@
 import { getQueryClient, trpc } from "@/trpc/server";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
-import { ProductList, ProductListSkeleton } from "@/modules/products/ui/components/product-list";
+import { ProductList, ProductListSkeleton } from "@/components/ui/product-list";
 import { Suspense } from "react";
 
 interface Props {
