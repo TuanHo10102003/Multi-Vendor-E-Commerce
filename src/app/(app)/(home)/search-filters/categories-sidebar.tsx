@@ -19,14 +19,12 @@ interface Props {
 }
 
 export const CategoriesSidebar = ({ open, onOpenChange }: Props) => {
-
-    const trpc = useTRPC();
-  const { data }= useQuery(trpc.categories.getMany.queryOptions())
+  const trpc = useTRPC();
+  const { data } = useQuery(trpc.categories.getMany.queryOptions());
 
   const router = useRouter();
-  const [parentCategories, setparentCategories] = useState<
-    CategoriesGetManyOutput | null
-  >(null);
+  const [parentCategories, setparentCategories] =
+    useState<CategoriesGetManyOutput | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<
     CategoriesGetManyOutput[1] | null
   >(null);
@@ -62,11 +60,11 @@ export const CategoriesSidebar = ({ open, onOpenChange }: Props) => {
   };
 
   const handleBackClick = () => {
-    if(parentCategories) {
-        setSelectedCategory(null)
-        setparentCategories(null)
+    if (parentCategories) {
+      setSelectedCategory(null);
+      setparentCategories(null);
     }
-  }
+  };
 
   const backgroundColor = selectedCategory?.color || "white";
 

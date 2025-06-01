@@ -21,7 +21,10 @@ interface Props {
 export const NavbarSidebar = ({ items, open, onOpenChange }: Props) => {
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="right" className="p-0 transition-none">
+      <SheetContent
+        side="right"
+        className="p-0 transition-none h-screen max-h-screen w-[85%] sm:w-[400px] bg-white"
+      >
         <SheetHeader className="p-4 border-b">
           <div>
             <SheetTitle>Menu</SheetTitle>
@@ -39,19 +42,19 @@ export const NavbarSidebar = ({ items, open, onOpenChange }: Props) => {
             </Link>
           ))}
           <div className="border-t">
-            <Link 
-                href="/sign-in"
-                className="w-full text-left p-4 hover:bg-black hover:text-white flex items-center text-base font-medium"
-                onClick={() => onOpenChange(false)}
+            <Link
+              href="/sign-in"
+              className="w-full text-left p-4 hover:bg-black hover:text-white flex items-center text-base font-medium"
+              onClick={() => onOpenChange(false)}
             >
-                Login
+              Login
             </Link>
-            <Link 
-                href="/sign-up"
-                className="w-full text-left p-4 hover:bg-black hover:text-white flex items-center text-base font-medium"
-                onClick={() => onOpenChange(false)}
+            <Link
+              href="/sign-up"
+              className="w-full text-left p-4 hover:bg-black hover:text-white flex items-center text-base font-medium"
+              onClick={() => onOpenChange(false)}
             >
-                Start Selling
+              Start Selling
             </Link>
           </div>
         </ScrollArea>
