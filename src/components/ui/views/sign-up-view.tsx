@@ -18,7 +18,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 
-import { registerShema } from "../../schemas";
+import { registerShema } from "../../../modules/auth/schemas";
 import { z } from "zod";
 import Link from "next/link";
 import { cn } from "@/lib/utils";

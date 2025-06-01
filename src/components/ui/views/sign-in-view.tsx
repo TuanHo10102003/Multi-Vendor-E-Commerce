@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import { Poppins } from "next/font/google";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-
 import {
   Form,
   FormControl,
@@ -17,7 +16,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 
-import { loginSchema } from "../../schemas";
+import { loginSchema } from "@/modules/auth/schemas";
 import { z } from "zod";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
@@ -31,7 +30,6 @@ const poppins = Poppins({
 
 export const SignInView = () => {
   const router = useRouter();
-
   const trpc = useTRPC();
   const queryClient = useQueryClient();
 

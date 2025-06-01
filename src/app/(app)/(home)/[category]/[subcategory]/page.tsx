@@ -2,9 +2,9 @@ import { getQueryClient, trpc } from "@/trpc/server";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import { SearchParams } from "nuqs/server";
 import { loadProductFilters } from "@/modules/products/search-params";
-import { ProductFilters } from "@/components/ui/product-filters";
-import { ProductList, ProductListSkeleton } from "@/components/ui/product-list";
-import { ProductSort } from "@/components/ui/product-sort";
+import { ProductFilters } from "@/components/ui/products/product-filters";
+import { ProductList, ProductListSkeleton } from "@/components/ui/products/product-list";
+import { ProductSort } from "@/components/ui/products/product-sort";
 import { Suspense } from "react";
 import { DEFAULT_LIMIT } from "@/constants";
 
