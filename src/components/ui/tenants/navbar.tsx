@@ -5,6 +5,21 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import Image from "next/image";
 import { generateTenantURL } from "@/lib/utils";
+import dynamic from "next/dynamic";
+import { Button } from "../button";
+import { ShoppingCartIcon } from "lucide-react";
+
+const CheckoutButton = dynamic(
+  () => import("../checkout/checkout-button").then((mod) => mod.CheckoutButton),
+  {
+    ssr: false,
+    loading: () => (
+      <Button disabled className="bg-white">
+        <ShoppingCartIcon className="text-black" />
+      </Button>
+    ),
+  }
+);
 
 interface Props {
   slug: string;
@@ -17,7 +32,10 @@ export const Navbar = ({ slug }: Props) => {
   return (
     <nav className="h-20 border-b font-medium bg-white">
       <div className="max-w-(--breakpoint-xl) mx-auto flex justify-between items-center h-full px-4 lg:px-12">
-        <Link href={generateTenantURL(slug)} className="flex items-center gap-2">
+        <Link
+          href={generateTenantURL(slug)}
+          className="flex items-center gap-2"
+        >
           {data.image?.url && (
             <Image
               src={data.image.url}
@@ -29,6 +47,7 @@ export const Navbar = ({ slug }: Props) => {
           )}
           <p className="text-xl">{data.name}</p>
         </Link>
+        <CheckoutButton hideIfEmpty tenantSlug={slug}></CheckoutButton>
       </div>
     </nav>
   );
@@ -39,6 +58,9 @@ export const NavbarSkeleton = () => {
     <nav className="h-20 border-b font-medium bg-white">
       <div className="max-w-[var(--breakpoint-xl)] mx-auto flex justify-between items-center h-full px-4 lg:px-12">
         <div />
+        <Button disabled className="bg-white">
+          <ShoppingCartIcon className="text-black" />
+        </Button>
       </div>
     </nav>
   );
