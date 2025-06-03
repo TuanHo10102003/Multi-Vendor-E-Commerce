@@ -50,7 +50,6 @@ export const CheckoutView = ({ tenantSlug }: CheckoutViewProps) => {
     if (states.success) {
       setStates({ success: false, cancel: false })
       clearCart();
-
       router.push("/products");
     }
   }, [states.success, clearCart, router, setStates]);

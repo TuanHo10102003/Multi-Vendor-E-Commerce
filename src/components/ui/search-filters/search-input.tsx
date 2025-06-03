@@ -32,14 +32,14 @@ export const SearchInput = ({ disabled }: Props) => {
       </div>
       <Button
         variant="elevated"
-        className="size-12 shrink-0 flex lg:hidden"
+        className="size-10 shrink-0 flex lg:hidden"
         onClick={() => setIsSidebarOpen(true)}
       >
         <ListFilterIcon />
       </Button>
       {session.data?.user && (
         <Button asChild variant="elevated">
-          <Link href="/library">
+          <Link prefetch href="/library">
             <BookmarkCheckIcon />
             Library
           </Link>

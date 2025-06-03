@@ -11,17 +11,19 @@ import { LinkIcon, StarIcon } from "lucide-react";
 import { Fragment } from "react";
 import { Progress } from "../progress";
 // import { CartButton } from "../products/cart-button";
-import dynamic from "next/dynamic"
+import dynamic from "next/dynamic";
 
 const CartButton = dynamic(
-  () => import("../products/cart-button").then(
-    (mod) => mod.CartButton
-  ),
+  () => import("../products/cart-button").then((mod) => mod.CartButton),
   {
     ssr: false,
-    loading: () => <Button disabled className="flex-1 bg-pink-400">Add to cart</Button>
+    loading: () => (
+      <Button disabled className="flex-1 bg-pink-400">
+        Add to cart
+      </Button>
+    ),
   }
-)
+);
 
 interface ProductViewProps {
   productId: string;
@@ -104,9 +106,13 @@ export const ProductView = ({ productId, tenantSlug }: ProductViewProps) => {
             <div className="border-t lg:border-t-0 lg:border-l h-full">
               <div className="flex flex-col gap-4 p-6 border-b">
                 <div className="flex flex-row items-center gap-2">
-                  <CartButton tenantSlug={tenantSlug} productId={productId} />
+                  <CartButton
+                    isPurchased={data.isPurchased}
+                    tenantSlug={tenantSlug}
+                    productId={productId}
+                  />
                   <Button
-                    className="size-12"
+                    className="size-9"
                     variant="elevated"
                     onClick={() => {}}
                     disabled={false}
@@ -117,7 +123,7 @@ export const ProductView = ({ productId, tenantSlug }: ProductViewProps) => {
                 <p className="text-center font-medium">
                   {data.refundPolicy === "no-refunds"
                     ? "No refunds"
-                    : `${data.refundPolicy} money back huarantee`}
+                    : `${data.refundPolicy} money back guarantee`}
                 </p>
               </div>
               <div className="p-6">
