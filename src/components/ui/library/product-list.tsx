@@ -1,15 +1,11 @@
 "use client";
 
 import { useTRPC } from "@/trpc/client";
-import {
-  useSuspenseInfiniteQuery,
-  useSuspenseQuery,
-} from "@tanstack/react-query";
+import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
 import { ProductCard, ProductCardSkeleton } from "./product-card";
 import { DEFAULT_LIMIT } from "@/constants";
 import { Button } from "../button";
 import { InboxIcon } from "lucide-react";
-import { cn } from "@/lib/utils";
 
 export const ProductList = () => {
   const trpc = useTRPC();
@@ -49,8 +45,8 @@ export const ProductList = () => {
               imageUrl={product.image?.url}
               tenantSlug={product.tenant?.slug}
               tenantImageUrl={product.tenant?.image?.url}
-              reviewRating={3}
-              reviewCount={5}
+              reviewRating={product.reviewRating}
+              reviewCount={product.reviewCount}
             ></ProductCard>
           ))}
       </div>
