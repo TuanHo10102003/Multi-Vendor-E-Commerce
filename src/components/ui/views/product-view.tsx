@@ -5,7 +5,7 @@ import { useTRPC } from "@/trpc/client";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
-import { StarRating } from "../products/star-rating";
+import { StarRating } from "../library/star-rating";
 import { Button } from "../button";
 import { LinkIcon, StarIcon } from "lucide-react";
 import { Fragment } from "react";

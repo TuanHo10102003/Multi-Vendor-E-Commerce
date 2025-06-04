@@ -3,7 +3,7 @@
 import { generateTenantURL } from "@/lib/utils";
 import { useCart } from "@/modules/checkout/hooks/use-cart";
 import { useTRPC } from "@/trpc/client";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { toast } from "sonner";
 import { CheckoutItem } from "../checkout/checkout-item";
@@ -23,6 +23,7 @@ export const CheckoutView = ({ tenantSlug }: CheckoutViewProps) => {
   const { productIds, removeProduct, clearCart } = useCart(tenantSlug);
 
   const trpc = useTRPC();
+  const queryClient = useQueryClient();
   const { data, error, isLoading } = useQuery(
     trpc.checkout.getProducts.queryOptions({
       ids: productIds,
@@ -32,27 +33,35 @@ export const CheckoutView = ({ tenantSlug }: CheckoutViewProps) => {
   const purchase = useMutation(
     trpc.checkout.purchase.mutationOptions({
       onMutate: () => {
-        setStates({ success: false, cancel: false})
+        setStates({ success: false, cancel: false });
       },
       onSuccess: (data) => {
-        window.location.href = data.url
+        window.location.href = data.url;
       },
       onError: (error) => {
         if (error.data?.code === "UNAUTHORIZED") {
-          router.push("/sign-in")
+          router.push("/sign-in");
         }
-        toast.error(error.message)
+        toast.error(error.message);
       },
     })
   );
 
   useEffect(() => {
     if (states.success) {
-      setStates({ success: false, cancel: false })
+      setStates({ success: false, cancel: false });
       clearCart();
-      router.push("/products");
+      queryClient.invalidateQueries(trpc.library.getMany.infiniteQueryFilter());
+      router.push("/library");
     }
-  }, [states.success, clearCart, router, setStates]);
+  }, [
+    states.success,
+    clearCart,
+    router,
+    setStates,
+    queryClient,
+    trpc.library.getMany,
+  ]);
 
   useEffect(() => {
     if (error?.data?.code === "NOT_FOUND") {
