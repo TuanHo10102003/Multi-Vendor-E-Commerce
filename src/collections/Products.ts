@@ -12,10 +12,11 @@ export const Products: CollectionConfig = {
 
       return Boolean(tenant?.stripeDetailsSubmitted);
     },
+    delete: ({ req }) => isSuperAdmin(req.user),
   },
   admin: {
     useAsTitle: "name",
-    description: "You must verify your account before creating products"
+    description: "You must verify your account before creating products",
   },
   fields: [
     {
@@ -25,7 +26,7 @@ export const Products: CollectionConfig = {
     },
     {
       name: "description",
-      type: "text",
+      type: "richText",
     },
     {
       name: "price",
@@ -60,10 +61,29 @@ export const Products: CollectionConfig = {
     },
     {
       name: "content",
-      type: "textarea",
+      type: "richText",
       admin: {
         description:
           "Protected content only visible to customers after purchase. Add product documentation, downloadable files, getting started guides and bonus materials. Support Markdown formatting",
+      },
+    },
+    {
+      name: "isArchived",
+      label: "Hide",
+      defaultValue: false,
+      type: "checkbox",
+      admin: {
+        description: "Check if you want to hide this product",
+      },
+    },
+    {
+      name: "isPrivate",
+      label: "Private",
+      defaultValue: false,
+      type: "checkbox",
+      admin: {
+        description:
+          "Check if you do not want to show this product on the public storefront",
       },
     },
   ],
