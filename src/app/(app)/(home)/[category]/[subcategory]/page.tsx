@@ -3,7 +3,10 @@ import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import { SearchParams } from "nuqs/server";
 import { loadProductFilters } from "@/modules/products/search-params";
 import { ProductFilters } from "@/components/ui/products/product-filters";
-import { ProductList, ProductListSkeleton } from "@/components/ui/products/product-list";
+import {
+  ProductList,
+  ProductListSkeleton,
+} from "@/components/ui/products/product-list";
 import { ProductSort } from "@/components/ui/products/product-sort";
 import { Suspense } from "react";
 import { DEFAULT_LIMIT } from "@/constants";
@@ -15,6 +18,8 @@ interface Props {
   searchParams: Promise<SearchParams>;
 }
 
+export const dynamic = "force-dynamic";
+
 const Page = async ({ params, searchParams }: Props) => {
   const { subcategory } = await params;
 
@@ -22,7 +27,11 @@ const Page = async ({ params, searchParams }: Props) => {
 
   const queryClient = getQueryClient();
   void queryClient.prefetchInfiniteQuery(
-    trpc.products.getMany.infiniteQueryOptions({ ...filters, category: subcategory, limit: DEFAULT_LIMIT })
+    trpc.products.getMany.infiniteQueryOptions({
+      ...filters,
+      category: subcategory,
+      limit: DEFAULT_LIMIT,
+    })
   );
 
   return (

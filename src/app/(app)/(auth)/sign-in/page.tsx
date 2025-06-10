@@ -1,7 +1,18 @@
-"use client";
 
 import { SignInView } from "@/components/ui/views/sign-in-view";
+import { caller } from "@/trpc/server";
+import { redirect } from "next/navigation";
 
-export default function Page() {
-  return <SignInView />;
+export const dynamic = "force-dynamic"
+
+const Page = async () => {
+  const session = await caller.auth.session();
+
+  if (session.user) {
+    redirect("/");
+  }
+
+  return <SignInView />
 }
+
+export default Page

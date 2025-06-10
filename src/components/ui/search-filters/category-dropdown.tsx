@@ -16,7 +16,6 @@ interface Props {
 export const CategoryDropdown = ({
   category,
   isActive,
-  isNavigationHovered,
 }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);

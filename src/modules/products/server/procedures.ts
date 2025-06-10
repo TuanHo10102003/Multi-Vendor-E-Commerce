@@ -5,7 +5,6 @@ import z from "zod";
 import { sortValues } from "../search-params";
 import { DEFAULT_LIMIT } from "@/constants";
 import { headers as getHeaders } from "next/headers";
-import { Fascinate } from "next/font/google";
 import { TRPCError } from "@trpc/server";
 
 export const productsRouter = createTRPCRouter({

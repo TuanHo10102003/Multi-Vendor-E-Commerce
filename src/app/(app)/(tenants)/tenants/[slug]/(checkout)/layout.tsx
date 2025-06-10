@@ -1,7 +1,7 @@
 import { Footer } from "@/components/ui/tenants/footer";
 import { Navbar } from "@/components/ui/checkout/navbar";
 
-import React, { Suspense } from "react";
+import React from "react";
 
 interface LayoutProps {
   children: React.ReactNode;

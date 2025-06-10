@@ -1,7 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
 import { StarIcon } from "lucide-react";
-import { formatCurrency } from "@/lib/utils";
 
 interface ProductCardProps {
   id: string;

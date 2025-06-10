@@ -1,6 +1,5 @@
 import { getPayload } from "payload";
 import config from "@payload-config";
-import { sub } from "date-fns";
 import { stripe } from "./lib/stripe";
 
 const categories = [
