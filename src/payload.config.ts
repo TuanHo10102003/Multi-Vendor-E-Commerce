@@ -8,6 +8,7 @@ import { fileURLToPath } from "url";
 import sharp from "sharp";
 import { multiTenantPlugin } from "@payloadcms/plugin-multi-tenant";
 import { Config } from "./payload-types";
+import { vercelBlobStorage } from "@payloadcms/storage-vercel-blob"
 
 import { Users } from "./collections/Users";
 import { Media } from "./collections/Media";
@@ -62,6 +63,12 @@ export default buildConfig({
       },
       userHasAccessToAllTenants: (user) => isSuperAdmin(user),
     }),
-    // storage-adapter-placeholder
+    vercelBlobStorage({
+      enabled: true,
+      collections: {
+        media: true
+      },
+      token: process.env.BLOB_READ_WRITE_TOKEN
+    })
   ],
 });

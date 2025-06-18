@@ -12,7 +12,6 @@
     "db:fresh": "payload migrate:fresh",
     "db:seed": "bun run src/seed.ts",
     "generate:importmap": "payload generate:importmap"
-
   },
   "dependencies": {
     "@hookform/resolvers": "^5.0.1",
@@ -21,6 +20,7 @@
     "@payloadcms/payload-cloud": "^3.39.1",
     "@payloadcms/plugin-multi-tenant": "3.39.1",
     "@payloadcms/richtext-lexical": "^3.39.1",
+    "@payloadcms/storage-vercel-blob": "3.39.1",
     "@radix-ui/react-accordion": "^1.2.11",
     "@radix-ui/react-alert-dialog": "^1.1.14",
     "@radix-ui/react-aspect-ratio": "^1.1.7",
